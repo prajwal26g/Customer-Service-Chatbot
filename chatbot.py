@@ -2,9 +2,13 @@ import boto3
 import json
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Connect to Bedrock and choose the model
-client = boto3.client("bedrock-runtime", region_name="eu-central-1")
-model_id = "eu.amazon.nova-lite-v1:0"
+client = boto3.client("bedrock-runtime", region_name=os.getenv("AWS_REGION"))
+model_id = os.getenv("BEDROCK_MODEL_ID")
 
 # Give the chatbot a personality
 system_prompt = [{"text": "You are a customer support assistant."
@@ -41,9 +45,9 @@ while True:
             "maxTokens": 512
         },
         guardrailConfig={
-            "guardrailIdentifier": "v8fanzmm546w",
-            "guardrailVersion": "DRAFT",
-            "trace": "enabled"
+        "guardrailIdentifier": os.getenv("GUARDRAIL_ID"),
+        "guardrailVersion": os.getenv("GUARDRAIL_VERSION"),
+        "trace": "enabled"
         }
     )
 
