@@ -1,10 +1,20 @@
 import boto3
 import json
 import os
+import pandas as pd
 
 from dotenv import load_dotenv
+from langchain_aws import BedrockEmbeddings
+from langchain.docstore.document import Document
 
 load_dotenv()
+
+embeddings = BedrockEmbeddings(
+    model_id = os.getenv("EMBEDDING_MODEL_ID"),
+    region_name = os.getenv("AWS_REGION")
+)
+
+df = pd.read_csv("Bitext_Sample_Customer_Support_Training_Dataset_27K_responses-v11.csv")
 
 # Connect to Bedrock and choose the model
 client = boto3.client("bedrock-runtime", region_name=os.getenv("AWS_REGION"))
