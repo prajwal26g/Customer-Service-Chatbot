@@ -9,6 +9,7 @@ from langchain.docstore.document import Document
 
 load_dotenv()
 
+#Creating the embeddings
 embeddings = BedrockEmbeddings(
     model_id = os.getenv("EMBEDDING_MODEL_ID"),
     region_name = os.getenv("AWS_REGION")
